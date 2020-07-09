@@ -10,17 +10,20 @@ namespace TomasKireilisProject
     {
         private static void Main(string[] args)
         {
-            //Uncomment which you want to try;
+            //Uncomment which one you want to try;
 
-            Task1();
+            // Task1();
             Task2();
         }
 
         public static void Task1()
         {
+            Console.WriteLine("enter text");
             var input = Console.ReadLine();
+
             //For fast check
-            //  input = "I donn’t knoow pii value,  so I will go eat my ppiie…";
+            // input = "I donn’t knoow pii value,  so I will go eat my ppiie…";
+
             input = string.Join(" ",
                 input.Split(' ')
                     .Select(RemoveLetterRepetitions));
@@ -32,8 +35,9 @@ namespace TomasKireilisProject
         {
             List<int> intList = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
             intList = RemoveByFirst(intList);
+
             int lastIndex = 1;
-            while (intList.Count > 1 && intList.Count > intList[lastIndex])
+            while (intList.Count >= intList[lastIndex])
             {
                 intList = RemoveEveryNNumber(intList, lastIndex);
                 lastIndex++;
@@ -61,14 +65,11 @@ namespace TomasKireilisProject
 
         private static List<int> RemoveEveryNNumber(List<int> list, int byIndex)
         {
-            if (list.Count > 1)
+            var removeEvery = list[byIndex];
+            for (int i = removeEvery - 1; i < list.Count;)
             {
-                var removeEvery = list[byIndex];
-                for (int i = removeEvery - 1; i < list.Count;)
-                {
-                    list.RemoveAt(i);
-                    i += removeEvery - 1;
-                }
+                list.RemoveAt(i);
+                i += removeEvery - 1;
             }
 
             return list;
