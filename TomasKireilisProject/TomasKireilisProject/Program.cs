@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Transactions;
 
 namespace TomasKireilisProject
@@ -12,8 +15,8 @@ namespace TomasKireilisProject
         {
             //Uncomment which one you want to try;
 
-            // Task1();
-            Task2();
+            Task1();
+            // Task2();
         }
 
         public static void Task1()
@@ -22,7 +25,7 @@ namespace TomasKireilisProject
             var input = Console.ReadLine();
 
             //For fast check
-            // input = "I donn’t knoow pii value,  so I will go eat my ppiie…";
+            input = "PII donn’t knoow pii value,  so I will go eat my ppiie…pi";
 
             input = string.Join(" ",
                 input.Split(' ')
@@ -77,30 +80,24 @@ namespace TomasKireilisProject
 
         private static string RemoveLetterRepetitions(string input)
         {
-            for (int i = 0; i < input.Length - 1; i++)
+            StringBuilder str = new StringBuilder(input);
+            for (int i = 0; i < str.Length - 1; i++)
             {
-                if (input[i + 1] == input[i])
+                if (str[i + 1] == str[i])
                 {
-                    input = input.Remove(i, 1);
+                    str = str.Remove(i, 1);
                     i--;
                 }
             }
 
-            return input;
+            return str.ToString();
         }
 
         private static string ReplacePIWithValue(string input)
         {
-            for (int i = 0; i < input.Length - 4; i++)
-            {
-                if (input.Substring(i, 4).ToLower() == " pi ")
-                {
-                    input = input.Remove(i, 4);
-                    input = input.Insert(i, " 3.14 ");
-                }
-            }
-
-            return input;
+            string pattern = @"\bPI\b";
+            string replace = "3.14";
+            return Regex.Replace(input, pattern, replace, RegexOptions.IgnoreCase);
         }
     }
 }
