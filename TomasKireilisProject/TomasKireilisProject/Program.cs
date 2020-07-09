@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Transactions;
 
 namespace TomasKireilisProject
 {
@@ -8,7 +11,8 @@ namespace TomasKireilisProject
         private static void Main(string[] args)
         {
             //Uncomment which you want to try;
-            // Task1();
+
+            Task1();
             Task2();
         }
 
@@ -26,6 +30,48 @@ namespace TomasKireilisProject
 
         public static void Task2()
         {
+            List<int> intList = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
+            intList = RemoveByFirst(intList);
+            int lastIndex = 1;
+            while (intList.Count > 1 && intList.Count > intList[lastIndex])
+            {
+                intList = RemoveEveryNNumber(intList, lastIndex);
+                lastIndex++;
+            }
+
+            intList.ForEach(x => Console.Write(x + " "));
+        }
+
+        private static List<int> RemoveByFirst(List<int> list)
+        {
+            if (list.Count > 0)
+            {
+                if (list[0] % 2 == 0)
+                {
+                    list = list.Where(x => x % 2 == 0).ToList();
+                }
+                else
+                {
+                    list = list.Where(x => x % 2 != 0).ToList();
+                }
+            }
+
+            return list;
+        }
+
+        private static List<int> RemoveEveryNNumber(List<int> list, int byIndex)
+        {
+            if (list.Count > 1)
+            {
+                var removeEvery = list[byIndex];
+                for (int i = removeEvery - 1; i < list.Count;)
+                {
+                    list.RemoveAt(i);
+                    i += removeEvery - 1;
+                }
+            }
+
+            return list;
         }
 
         private static string RemoveLetterRepetitions(string input)
